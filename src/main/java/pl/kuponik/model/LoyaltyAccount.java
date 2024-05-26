@@ -5,13 +5,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Version;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
-import lombok.Setter;
+import pl.kuponik.exception.InsufficientPointsException;
 
 import java.util.UUID;
 
 @Entity
 @Getter
-@Setter
 public class LoyaltyAccount {
 
     @Id
@@ -25,4 +24,24 @@ public class LoyaltyAccount {
 
     @Version
     private int version;
+
+    public LoyaltyAccount(UUID customerId) {
+        this.id = UUID.randomUUID();
+        this.customerId = customerId;
+        this.points = 0;
+    }
+
+    protected LoyaltyAccount() {
+    }
+
+    public void addPoints(int pointsToAdd) {
+        points += pointsToAdd;
+    }
+
+    public void subtractPoints(int pointsToSubtract) {
+        if (points < pointsToSubtract) {
+            throw new InsufficientPointsException(id);
+        }
+        points -= pointsToSubtract;
+    }
 }

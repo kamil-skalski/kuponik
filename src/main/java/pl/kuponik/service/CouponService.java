@@ -7,7 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.kuponik.dto.CouponDto;
 import pl.kuponik.dto.CreateCouponDto;
 import pl.kuponik.dto.RedeemCouponRequest;
-import pl.kuponik.exception.*;
+import pl.kuponik.exception.CouponNotFoundException;
+import pl.kuponik.exception.LoyaltyAccountNotFoundException;
 import pl.kuponik.model.Coupon;
 import pl.kuponik.model.LoyaltyAccount;
 import pl.kuponik.repostiory.CouponRepository;
@@ -29,17 +30,7 @@ public class CouponService {
 
     @Transactional
     public UUID createCoupon(CreateCouponDto request) {
-        var loyaltyAccountDto = loyaltyAccountService.getAccount(request.loyaltyAccountId());
-
-        if (loyaltyAccountDto.points() < request.nominalValue().getRequiredPoints()) {
-            throw new InsufficientPointsException(request.loyaltyAccountId());
-        }
-
-        var coupon = new Coupon();
-        coupon.setId(UUID.randomUUID());
-        coupon.setLoyaltyAccount(findLoyaltyAccountById(request.loyaltyAccountId()));
-        coupon.setActive(true);
-        coupon.setNominalValue(request.nominalValue());
+        var coupon = new Coupon(findLoyaltyAccountById(request.loyaltyAccountId()), request.nominalValue());
 
         loyaltyAccountService.subtractPoints(request.loyaltyAccountId(), request.nominalValue().getRequiredPoints());
 
@@ -51,15 +42,8 @@ public class CouponService {
         var coupon = couponRepository.findById(couponId)
                 .orElseThrow(() -> new CouponNotFoundException(couponId));
 
-        if (!coupon.getLoyaltyAccount().getId().equals(request.loyaltyAccountId())) {
-            throw new UnauthorizedCouponAccessException(couponId, request.loyaltyAccountId());
-        }
+        coupon.redeem(request.loyaltyAccountId());
 
-        if (!coupon.isActive()) {
-            throw new CouponNotActiveException(couponId);
-        }
-
-        coupon.setActive(false);
         couponRepository.save(coupon);
     }
 

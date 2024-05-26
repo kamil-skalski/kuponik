@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.kuponik.dto.CreateLoyaltyAccountDto;
 import pl.kuponik.dto.LoyaltyAccountDto;
-import pl.kuponik.exception.InsufficientPointsException;
 import pl.kuponik.exception.LoyaltyAccountNotFoundException;
 import pl.kuponik.model.LoyaltyAccount;
 import pl.kuponik.repostiory.LoyaltyAccountRepository;
@@ -33,10 +32,7 @@ public class LoyaltyAccountService {
     }
 
     public UUID addAccount(CreateLoyaltyAccountDto createDto) {
-        var account = new LoyaltyAccount();
-        account.setId(UUID.randomUUID());
-        account.setCustomerId(createDto.customerId());
-        account.setPoints(0);
+        var account = new LoyaltyAccount(createDto.customerId());
         return loyaltyAccountRepository.save(account).getId();
     }
 
@@ -44,7 +40,8 @@ public class LoyaltyAccountService {
     public void addPoints(UUID id, Integer pointsToAdd) {
         var account = loyaltyAccountRepository.findById(id).orElseThrow(()
                 -> new LoyaltyAccountNotFoundException(id));
-        account.setPoints(account.getPoints() + pointsToAdd);
+
+        account.addPoints(pointsToAdd);
         loyaltyAccountRepository.save(account);
     }
 
@@ -53,11 +50,7 @@ public class LoyaltyAccountService {
         var account = loyaltyAccountRepository.findById(id).orElseThrow(()
                 -> new LoyaltyAccountNotFoundException(id));
 
-        if (account.getPoints() < pointsToSubtract) {
-            throw new InsufficientPointsException(id);
-        }
-
-        account.setPoints(account.getPoints() - pointsToSubtract);
+        account.subtractPoints(pointsToSubtract);
         loyaltyAccountRepository.save(account);
     }
 }
