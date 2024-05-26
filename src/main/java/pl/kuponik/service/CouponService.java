@@ -1,7 +1,7 @@
 package pl.kuponik.service;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.kuponik.dto.CouponDto;
@@ -17,16 +17,12 @@ import pl.kuponik.repostiory.LoyaltyAccountRepository;
 import java.util.UUID;
 
 @Service
+@AllArgsConstructor
 public class CouponService {
 
-    @Autowired
-    private CouponRepository couponRepository;
-
-    @Autowired
-    private LoyaltyAccountService loyaltyAccountService;
-
-    @Autowired
-    private LoyaltyAccountRepository loyaltyAccountRepository;
+    private final CouponRepository couponRepository;
+    private final LoyaltyAccountService loyaltyAccountService;
+    private final LoyaltyAccountRepository loyaltyAccountRepository;
 
     @Transactional
     public UUID createCoupon(CreateCouponDto request) {

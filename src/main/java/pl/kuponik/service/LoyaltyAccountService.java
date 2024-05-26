@@ -1,6 +1,6 @@
 package pl.kuponik.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.kuponik.dto.CreateLoyaltyAccountDto;
@@ -14,10 +14,10 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@AllArgsConstructor
 public class LoyaltyAccountService {
 
-    @Autowired
-    private LoyaltyAccountRepository loyaltyAccountRepository;
+    private final LoyaltyAccountRepository loyaltyAccountRepository;
 
     public LoyaltyAccountDto getAccount(UUID id) {
         return loyaltyAccountRepository.findById(id)

@@ -2,27 +2,20 @@ package pl.kuponik.service;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import pl.kuponik.dto.CreateLoyaltyAccountDto;
 import pl.kuponik.dto.LoyaltyAccountDto;
 import pl.kuponik.exception.InsufficientPointsException;
 import pl.kuponik.exception.LoyaltyAccountNotFoundException;
-import pl.kuponik.repostiory.LoyaltyAccountRepository;
 
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-@SpringBootTest
 class LoyaltyAccountServiceTest {
 
-    @Autowired
-    private LoyaltyAccountService loyaltyAccountService;
-
-    @Autowired
-    private LoyaltyAccountRepository loyaltyAccountRepository;
+    InMemoryLoyaltyAccountRepository loyaltyAccountRepository = new InMemoryLoyaltyAccountRepository();
+    LoyaltyAccountService loyaltyAccountService = new LoyaltyAccountService(loyaltyAccountRepository);
 
     @AfterEach
     void cleanUp() {

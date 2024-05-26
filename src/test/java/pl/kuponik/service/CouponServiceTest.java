@@ -3,30 +3,23 @@ package pl.kuponik.service;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import pl.kuponik.dto.CreateCouponDto;
 import pl.kuponik.dto.CreateLoyaltyAccountDto;
 import pl.kuponik.dto.RedeemCouponRequest;
 import pl.kuponik.exception.*;
 import pl.kuponik.model.NominalValue;
-import pl.kuponik.repostiory.CouponRepository;
 
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-@SpringBootTest
 class CouponServiceTest {
-    @Autowired
-    private CouponService couponService;
 
-    @Autowired
-    private CouponRepository couponRepository;
-
-    @Autowired
-    private LoyaltyAccountService loyaltyAccountService;
+    InMemoryLoyaltyAccountRepository loyaltyAccountRepository = new InMemoryLoyaltyAccountRepository();
+    LoyaltyAccountService loyaltyAccountService = new LoyaltyAccountService(loyaltyAccountRepository);
+    InMemoryCouponRepository couponRepository = new InMemoryCouponRepository();
+    CouponService couponService = new CouponService(couponRepository, loyaltyAccountService, loyaltyAccountRepository);
 
     @AfterEach
     void cleanUp() {
