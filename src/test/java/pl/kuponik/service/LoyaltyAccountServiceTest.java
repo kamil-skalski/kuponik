@@ -42,7 +42,7 @@ class LoyaltyAccountServiceTest {
         var savedAccount = loyaltyAccountRepository.findById(accountId).orElseThrow();
         assertThat(savedAccount).isNotNull();
         assertThat(savedAccount.getCustomerId()).isEqualTo(customerId);
-        assertThat(savedAccount.getPoints()).isZero();
+        assertThat(savedAccount.getPoints().points()).isZero();
         assertThat(savedAccount.getId()).isEqualTo(accountId);
     }
 

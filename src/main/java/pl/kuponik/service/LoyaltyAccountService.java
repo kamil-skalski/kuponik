@@ -7,6 +7,7 @@ import pl.kuponik.dto.CreateLoyaltyAccountDto;
 import pl.kuponik.dto.LoyaltyAccountDto;
 import pl.kuponik.exception.LoyaltyAccountNotFoundException;
 import pl.kuponik.model.LoyaltyAccount;
+import pl.kuponik.model.LoyaltyPoints;
 import pl.kuponik.repostiory.LoyaltyAccountRepository;
 
 import java.util.List;
@@ -20,14 +21,14 @@ public class LoyaltyAccountService {
 
     public LoyaltyAccountDto getAccount(UUID id) {
         return loyaltyAccountRepository.findById(id)
-                .map(acc -> new LoyaltyAccountDto(acc.getId(), acc.getCustomerId(), acc.getPoints()))
+                .map(acc -> new LoyaltyAccountDto(acc.getId(), acc.getCustomerId(), acc.getPoints().points()))
                 .orElseThrow(() -> new LoyaltyAccountNotFoundException(id));
     }
 
     public List<LoyaltyAccountDto> getAccountByCustomerId(UUID customerId) {
         return loyaltyAccountRepository.findByCustomerId(customerId)
                 .stream()
-                .map(acc -> new LoyaltyAccountDto(acc.getId(), acc.getCustomerId(), acc.getPoints()))
+                .map(acc -> new LoyaltyAccountDto(acc.getId(), acc.getCustomerId(), acc.getPoints().points()))
                 .toList();
     }
 
@@ -41,7 +42,7 @@ public class LoyaltyAccountService {
         var account = loyaltyAccountRepository.findById(id).orElseThrow(()
                 -> new LoyaltyAccountNotFoundException(id));
 
-        account.addPoints(pointsToAdd);
+        account.addPoints(new LoyaltyPoints(pointsToAdd));
         loyaltyAccountRepository.save(account);
     }
 
@@ -50,7 +51,7 @@ public class LoyaltyAccountService {
         var account = loyaltyAccountRepository.findById(id).orElseThrow(()
                 -> new LoyaltyAccountNotFoundException(id));
 
-        account.subtractPoints(pointsToSubtract);
+        account.subtractPoints(new LoyaltyPoints(pointsToSubtract));
         loyaltyAccountRepository.save(account);
     }
 }

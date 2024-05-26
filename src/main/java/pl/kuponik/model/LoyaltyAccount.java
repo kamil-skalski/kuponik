@@ -20,7 +20,7 @@ public class LoyaltyAccount {
     private UUID customerId;
 
     @NotNull
-    private Integer points;
+    private LoyaltyPoints points;
 
     @Version
     private int version;
@@ -28,20 +28,20 @@ public class LoyaltyAccount {
     public LoyaltyAccount(UUID customerId) {
         this.id = UUID.randomUUID();
         this.customerId = customerId;
-        this.points = 0;
+        this.points = LoyaltyPoints.ZERO;
     }
 
     protected LoyaltyAccount() {
     }
 
-    public void addPoints(int pointsToAdd) {
-        points += pointsToAdd;
+    public void addPoints(LoyaltyPoints pointsToAdd) {
+        points = points.add(pointsToAdd);
     }
 
-    public void subtractPoints(int pointsToSubtract) {
-        if (points < pointsToSubtract) {
+    public void subtractPoints(LoyaltyPoints pointsToSubtract) {
+        if (!points.isGreaterOrEqualThan(pointsToSubtract)) {
             throw new InsufficientPointsException(id);
         }
-        points -= pointsToSubtract;
+        points = points.subtract(pointsToSubtract);
     }
 }
