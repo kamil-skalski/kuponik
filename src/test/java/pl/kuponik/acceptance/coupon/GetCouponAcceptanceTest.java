@@ -8,11 +8,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
-import pl.kuponik.infrastructure.api.dto.ApiErrorResponse;
-import pl.kuponik.application.dto.CouponDto;
-import pl.kuponik.application.dto.CreateCouponDto;
-import pl.kuponik.domain.NominalValue;
-import pl.kuponik.application.CouponService;
+import pl.kuponik.common.ApiErrorResponse;
+import pl.kuponik.coupon.application.CouponService;
+import pl.kuponik.coupon.application.dto.CouponDto;
+import pl.kuponik.coupon.application.dto.CreateCouponDto;
+import pl.kuponik.coupon.domain.NominalValue;
+import pl.kuponik.loyalty.FixtureLoyaltyAccountAcceptanceTest;
 
 import java.util.UUID;
 
@@ -28,7 +29,7 @@ class GetCouponAcceptanceTest {
     private TestRestTemplate restTemplate;
 
     @Autowired
-    private FixtureCouponAcceptanceTest fixture;
+    private FixtureLoyaltyAccountAcceptanceTest fixtureLoyalty;
 
     @Autowired
     private CouponService couponService;
@@ -40,7 +41,7 @@ class GetCouponAcceptanceTest {
             then return coupon details and HTTP 200 status""")
     void givenExistingCouponId_whenRequestIsSent_thenCouponDetailsReturnedAndHttp200() {
         //given
-        var loyaltyAccountId = fixture.createLoyaltyAccountWithPoints();
+        var loyaltyAccountId = fixtureLoyalty.createLoyaltyAccountWithPoints(1000);
         var couponId = couponService.createCoupon(new CreateCouponDto(loyaltyAccountId, NominalValue.TWENTY));
 
         //when

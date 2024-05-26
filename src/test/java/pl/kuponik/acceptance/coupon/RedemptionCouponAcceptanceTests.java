@@ -9,11 +9,12 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import pl.kuponik.infrastructure.api.dto.ApiErrorResponse;
-import pl.kuponik.application.dto.CreateCouponDto;
-import pl.kuponik.application.dto.RedeemCouponDto;
-import pl.kuponik.domain.NominalValue;
-import pl.kuponik.application.CouponService;
+import pl.kuponik.common.ApiErrorResponse;
+import pl.kuponik.coupon.application.dto.CreateCouponDto;
+import pl.kuponik.coupon.application.dto.RedeemCouponDto;
+import pl.kuponik.coupon.domain.NominalValue;
+import pl.kuponik.coupon.application.CouponService;
+import pl.kuponik.loyalty.FixtureLoyaltyAccountAcceptanceTest;
 
 import java.util.UUID;
 
@@ -32,7 +33,7 @@ class RedemptionCouponAcceptanceTests {
     private CouponService couponService;
 
     @Autowired
-    private FixtureCouponAcceptanceTest fixture;
+    private FixtureLoyaltyAccountAcceptanceTest fixtureLoyalty;
 
     @Test
     @DisplayName("""
@@ -41,7 +42,7 @@ class RedemptionCouponAcceptanceTests {
             then HTTP 204 status received""")
     void givenRequestToRedeemValidCoupon_whenRequestIsSent_thenHttp204Received() {
         //given
-        var loyaltyAccountId = fixture.createLoyaltyAccountWithPoints();
+        var loyaltyAccountId = fixtureLoyalty.createLoyaltyAccountWithPoints(1000);
         var couponId = couponService.createCoupon(new CreateCouponDto(loyaltyAccountId, NominalValue.TWENTY));
         var redeemCouponRequest = new RedeemCouponDto(loyaltyAccountId);
 
@@ -71,7 +72,7 @@ class RedemptionCouponAcceptanceTests {
             then HTTP 404 status received""")
     void givenRequestToRedeemCouponForNonExistentCoupon_whenRequestIsSent_thenHttp404Received() {
         //given
-        var loyaltyAccountId = fixture.createLoyaltyAccountWithPoints();
+        var loyaltyAccountId = fixtureLoyalty.createLoyaltyAccountWithPoints(1000);
         var redeemCouponRequest = new RedeemCouponDto(loyaltyAccountId);
         var nonExistentCouponId = UUID.randomUUID();
 
@@ -99,7 +100,7 @@ class RedemptionCouponAcceptanceTests {
             then receive HTTP 409 Conflict""")
     void givenCouponIsNotActive_whenRedeemAttemptIsMade_thenReceiveHttp409Conflict() {
         //given
-        var loyaltyAccountId = fixture.createLoyaltyAccountWithPoints();
+        var loyaltyAccountId = fixtureLoyalty.createLoyaltyAccountWithPoints(1000);
         var couponId = couponService.createCoupon(new CreateCouponDto(loyaltyAccountId, NominalValue.TWENTY));
         var redeemCouponRequest = new RedeemCouponDto(loyaltyAccountId);
         couponService.redeemCoupon(couponId, redeemCouponRequest);
@@ -128,8 +129,8 @@ class RedemptionCouponAcceptanceTests {
             then receive HTTP 403 Forbidden""")
     void givenCouponDoesNotBelongToLoyaltyAccount_whenRedeemAttemptIsMade_thenReceiveHttp403Forbidden() {
         //given
-        var ownerLoyaltyAccountId = fixture.createLoyaltyAccountWithPoints();
-        var nonOwnerLoyaltyAccountId = fixture.createLoyaltyAccountWithPoints();
+        var ownerLoyaltyAccountId = fixtureLoyalty.createLoyaltyAccountWithPoints(1000);
+        var nonOwnerLoyaltyAccountId = fixtureLoyalty.createLoyaltyAccountWithPoints(1000);
         var couponId = couponService.createCoupon(new CreateCouponDto(ownerLoyaltyAccountId, NominalValue.TWENTY));
         var redeemCouponRequest = new RedeemCouponDto(nonOwnerLoyaltyAccountId);
 

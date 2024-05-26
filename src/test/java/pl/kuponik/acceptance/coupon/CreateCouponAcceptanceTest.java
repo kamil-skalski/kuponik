@@ -8,10 +8,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
-import pl.kuponik.infrastructure.api.dto.ApiErrorResponse;
-import pl.kuponik.application.dto.CouponDto;
-import pl.kuponik.application.dto.CreateCouponDto;
-import pl.kuponik.domain.NominalValue;
+import pl.kuponik.common.ApiErrorResponse;
+import pl.kuponik.coupon.application.dto.CouponDto;
+import pl.kuponik.coupon.application.dto.CreateCouponDto;
+import pl.kuponik.coupon.domain.NominalValue;
+import pl.kuponik.loyalty.FixtureLoyaltyAccountAcceptanceTest;
 
 import java.util.UUID;
 
@@ -27,7 +28,7 @@ class CreateCouponAcceptanceTest {
     private TestRestTemplate restTemplate;
 
     @Autowired
-    private FixtureCouponAcceptanceTest fixture;
+    private FixtureLoyaltyAccountAcceptanceTest fixtureLoyalty;
 
     @Test
     @DisplayName("""
@@ -37,7 +38,7 @@ class CreateCouponAcceptanceTest {
     void givenValidCouponCreationRequest_whenRequestIsSent_thenCouponCreatedAndHttp201Returned() {
         // given
         var intPoints = 1000;
-        var loyaltyAccountWithPointsId = fixture.createLoyaltyAccountWithPoints(intPoints);
+        var loyaltyAccountWithPointsId = fixtureLoyalty.createLoyaltyAccountWithPoints(intPoints);
         var expectedPointsAfterCreateCoupon = intPoints - NominalValue.TWENTY.getRequiredPoints();
         var createCouponDto = new CreateCouponDto(loyaltyAccountWithPointsId, NominalValue.TWENTY);
 
@@ -58,7 +59,7 @@ class CreateCouponAcceptanceTest {
                 .hasFieldOrPropertyWithValue("isActive", true)
                 .extracting("id").isNotNull();
 
-        assertThat(fixture.getLoyaltyAccountPoints(loyaltyAccountWithPointsId))
+        assertThat(fixtureLoyalty.getLoyaltyAccountPoints(loyaltyAccountWithPointsId))
                 .isEqualTo(expectedPointsAfterCreateCoupon);
     }
 
@@ -93,7 +94,7 @@ class CreateCouponAcceptanceTest {
     void givenLoyaltyAccountHasInsufficientPoints_whenCouponCreationIsAttempted_thenReceiveHttp400BadRequest() {
         // given
         var intPoints = 40;
-        var loyaltyAccountWithPointsId = fixture.createLoyaltyAccountWithPoints(intPoints);
+        var loyaltyAccountWithPointsId = fixtureLoyalty.createLoyaltyAccountWithPoints(intPoints);
         var createCouponDto = new CreateCouponDto(loyaltyAccountWithPointsId, NominalValue.FIFTY);
 
         // when
@@ -108,7 +109,7 @@ class CreateCouponAcceptanceTest {
                 .asString()
                 .contains("Loyalty account doesn't have enough points");
 
-        assertThat(fixture.getLoyaltyAccountPoints(loyaltyAccountWithPointsId))
+        assertThat(fixtureLoyalty.getLoyaltyAccountPoints(loyaltyAccountWithPointsId))
                 .isEqualTo(intPoints);
     }
 

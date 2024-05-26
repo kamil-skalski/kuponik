@@ -1,4 +1,4 @@
-# Kuponik - Zadanie 2
+# Kuponik - Zadanie 2 - Rozwiązanie
 
 Rozumiemy już różne podejścia architektoniczne takie jak Ports and adapters,
 Onion Architecture, Clean Architecture, CQRS i inne. Każde z tych podejść powinno być stosowne gdy istnieje rzeczywista potrzeba.
