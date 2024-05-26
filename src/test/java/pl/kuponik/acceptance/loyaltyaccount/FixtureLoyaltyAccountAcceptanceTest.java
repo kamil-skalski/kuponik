@@ -2,8 +2,8 @@ package pl.kuponik.acceptance.loyaltyaccount;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import pl.kuponik.dto.CreateLoyaltyAccountDto;
-import pl.kuponik.service.LoyaltyAccountService;
+import pl.kuponik.application.dto.CreateLoyaltyAccountDto;
+import pl.kuponik.application.LoyaltyAccountService;
 
 import java.util.UUID;
 

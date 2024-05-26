@@ -1,8 +1,11 @@
 package pl.kuponik.model;
 
 import org.junit.jupiter.api.Test;
-import pl.kuponik.exception.CouponNotActiveException;
-import pl.kuponik.exception.UnauthorizedCouponAccessException;
+import pl.kuponik.domain.exception.CouponNotActiveException;
+import pl.kuponik.domain.Coupon;
+import pl.kuponik.domain.LoyaltyAccount;
+import pl.kuponik.domain.NominalValue;
+import pl.kuponik.domain.exception.UnauthorizedCouponAccessException;
 
 import java.util.UUID;
 

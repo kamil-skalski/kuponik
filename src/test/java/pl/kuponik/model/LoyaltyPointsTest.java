@@ -1,6 +1,7 @@
 package pl.kuponik.model;
 
 import org.junit.jupiter.api.Test;
+import pl.kuponik.domain.LoyaltyPoints;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

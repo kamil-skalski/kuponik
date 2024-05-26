@@ -1,7 +1,9 @@
 package pl.kuponik.model;
 
 import org.junit.jupiter.api.Test;
-import pl.kuponik.exception.InsufficientPointsException;
+import pl.kuponik.domain.exception.InsufficientPointsException;
+import pl.kuponik.domain.LoyaltyAccount;
+import pl.kuponik.domain.LoyaltyPoints;
 
 import java.util.UUID;
 

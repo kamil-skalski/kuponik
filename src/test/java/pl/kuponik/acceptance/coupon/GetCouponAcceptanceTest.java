@@ -8,11 +8,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
-import pl.kuponik.controller.ApiErrorResponse;
-import pl.kuponik.dto.CouponDto;
-import pl.kuponik.dto.CreateCouponDto;
-import pl.kuponik.model.NominalValue;
-import pl.kuponik.service.CouponService;
+import pl.kuponik.infrastructure.api.dto.ApiErrorResponse;
+import pl.kuponik.application.dto.CouponDto;
+import pl.kuponik.application.dto.CreateCouponDto;
+import pl.kuponik.domain.NominalValue;
+import pl.kuponik.application.CouponService;
 
 import java.util.UUID;
 

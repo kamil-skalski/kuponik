@@ -9,8 +9,8 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import pl.kuponik.controller.ApiErrorResponse;
-import pl.kuponik.dto.ModifyPointsRequest;
+import pl.kuponik.infrastructure.api.dto.ApiErrorResponse;
+import pl.kuponik.infrastructure.api.dto.ModifyPointsRequest;
 
 import java.util.UUID;
 

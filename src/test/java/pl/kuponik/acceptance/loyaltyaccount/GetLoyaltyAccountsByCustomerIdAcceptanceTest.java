@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
-import pl.kuponik.dto.LoyaltyAccountDto;
+import pl.kuponik.application.dto.LoyaltyAccountDto;
 
 import java.util.UUID;
 

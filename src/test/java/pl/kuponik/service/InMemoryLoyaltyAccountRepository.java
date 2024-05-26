@@ -1,7 +1,7 @@
 package pl.kuponik.service;
 
-import pl.kuponik.model.LoyaltyAccount;
-import pl.kuponik.repostiory.LoyaltyAccountRepository;
+import pl.kuponik.domain.LoyaltyAccount;
+import pl.kuponik.domain.repostiory.LoyaltyAccountRepository;
 
 import java.util.*;
 

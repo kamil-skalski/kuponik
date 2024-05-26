@@ -7,8 +7,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
-import pl.kuponik.controller.ApiErrorResponse;
-import pl.kuponik.dto.LoyaltyAccountDto;
+import pl.kuponik.infrastructure.api.dto.ApiErrorResponse;
+import pl.kuponik.application.dto.LoyaltyAccountDto;
 
 import java.util.UUID;
 

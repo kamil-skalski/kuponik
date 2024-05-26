@@ -2,10 +2,11 @@ package pl.kuponik.service;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import pl.kuponik.dto.CreateLoyaltyAccountDto;
-import pl.kuponik.dto.LoyaltyAccountDto;
-import pl.kuponik.exception.InsufficientPointsException;
-import pl.kuponik.exception.LoyaltyAccountNotFoundException;
+import pl.kuponik.application.LoyaltyAccountService;
+import pl.kuponik.application.dto.CreateLoyaltyAccountDto;
+import pl.kuponik.application.dto.LoyaltyAccountDto;
+import pl.kuponik.domain.exception.InsufficientPointsException;
+import pl.kuponik.application.exception.LoyaltyAccountNotFoundException;
 
 import java.util.UUID;
 

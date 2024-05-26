@@ -1,7 +1,7 @@
 package pl.kuponik.service;
 
-import pl.kuponik.model.Coupon;
-import pl.kuponik.repostiory.CouponRepository;
+import pl.kuponik.domain.Coupon;
+import pl.kuponik.domain.repostiory.CouponRepository;
 
 import java.util.HashMap;
 import java.util.Map;

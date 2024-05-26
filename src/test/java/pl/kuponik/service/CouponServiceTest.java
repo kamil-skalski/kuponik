@@ -3,11 +3,17 @@ package pl.kuponik.service;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import pl.kuponik.dto.CreateCouponDto;
-import pl.kuponik.dto.CreateLoyaltyAccountDto;
-import pl.kuponik.dto.RedeemCouponRequest;
-import pl.kuponik.exception.*;
-import pl.kuponik.model.NominalValue;
+import pl.kuponik.domain.exception.CouponNotActiveException;
+import pl.kuponik.application.exception.CouponNotFoundException;
+import pl.kuponik.application.CouponService;
+import pl.kuponik.application.LoyaltyAccountService;
+import pl.kuponik.domain.exception.InsufficientPointsException;
+import pl.kuponik.application.exception.LoyaltyAccountNotFoundException;
+import pl.kuponik.domain.exception.UnauthorizedCouponAccessException;
+import pl.kuponik.application.dto.CreateCouponDto;
+import pl.kuponik.application.dto.CreateLoyaltyAccountDto;
+import pl.kuponik.application.dto.RedeemCouponDto;
+import pl.kuponik.domain.NominalValue;
 
 import java.util.UUID;
 
@@ -98,7 +104,7 @@ class CouponServiceTest {
         // given
         var accountId = createLoyaltyAccountWithPoints(1000);
         var couponId = createCoupon(accountId, NominalValue.TWENTY);
-        var redeemRequest = new RedeemCouponRequest(accountId);
+        var redeemRequest = new RedeemCouponDto(accountId);
 
         // when
         couponService.redeemCoupon(couponId, redeemRequest);
@@ -117,7 +123,7 @@ class CouponServiceTest {
         // given
         var accountId = createLoyaltyAccountWithPoints(1000);
         var nonExistentCouponId = UUID.randomUUID();
-        var redeemRequest = new RedeemCouponRequest(accountId);
+        var redeemRequest = new RedeemCouponDto(accountId);
 
         // expected
         assertThatThrownBy(() -> couponService.redeemCoupon(nonExistentCouponId, redeemRequest))
@@ -130,7 +136,7 @@ class CouponServiceTest {
         var accountId = createLoyaltyAccountWithPoints(1000);
         var anotherAccountId = createLoyaltyAccountWithPoints(500);
         var couponId = createCoupon(accountId, NominalValue.TWENTY);
-        var redeemRequest = new RedeemCouponRequest(anotherAccountId);
+        var redeemRequest = new RedeemCouponDto(anotherAccountId);
 
         // expected
         assertThatThrownBy(() -> couponService.redeemCoupon(couponId, redeemRequest))
@@ -142,7 +148,7 @@ class CouponServiceTest {
         // given
         var accountId = createLoyaltyAccountWithPoints(1000);
         var couponId = createCoupon(accountId, NominalValue.TWENTY);
-        var redeemRequest = new RedeemCouponRequest(accountId);
+        var redeemRequest = new RedeemCouponDto(accountId);
         couponService.redeemCoupon(couponId, redeemRequest);
 
         // expected
