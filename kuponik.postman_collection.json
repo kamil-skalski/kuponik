@@ -1,0 +1,219 @@
+{
+	"info": {
+		"_postman_id": "30ff03f4-3d0f-4b18-8d68-74f999a9b2fb",
+		"name": "kuponik",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5840429"
+	},
+	"item": [
+		{
+			"name": "LoyaltyAccount",
+			"item": [
+				{
+					"name": "createAccount",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customerId\": \"569dc55c-6674-492c-90b3-b305b44a815c\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/loyalty-accounts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"loyalty-accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAccountById",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "addPoints",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"points\": 100\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/loyalty-accounts/9410c80a-fa48-4542-a184-3d18d33b81e5/add-points",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"loyalty-accounts",
+								"9410c80a-fa48-4542-a184-3d18d33b81e5",
+								"add-points"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "subtractPoints",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"points\": 50\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/loyalty-accounts/9410c80a-fa48-4542-a184-3d18d33b81e5/subtract-points",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"loyalty-accounts",
+								"9410c80a-fa48-4542-a184-3d18d33b81e5",
+								"subtract-points"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAccountsByCustomerId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/loyalty-accounts?customerId=569dc55c-6674-492c-90b3-b305b44a815c",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"loyalty-accounts"
+							],
+							"query": [
+								{
+									"key": "customerId",
+									"value": "569dc55c-6674-492c-90b3-b305b44a815c"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Coupon",
+			"item": [
+				{
+					"name": "createCoupon",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"loyaltyAccountId\": \"25c03120-cae7-45f0-b968-04176073ba30\",\n    \"nominalValue\": \"TEN\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/coupons",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"coupons"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "redeemCoupon",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"loyaltyAccountId\": \"25c03120-cae7-45f0-b968-04176073ba30\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/coupons/e4ef679a-c78a-4f88-898d-89ff40b409c0/redeem",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"coupons",
+								"e4ef679a-c78a-4f88-898d-89ff40b409c0",
+								"redeem"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getCoupon",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/coupons/e4ef679a-c78a-4f88-898d-89ff40b409c0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"coupons",
+								"e4ef679a-c78a-4f88-898d-89ff40b409c0"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
