@@ -11,9 +11,9 @@ i dopiero tam dobieranie odpowieniego młotka.
 ## Zadanie
 
 Twoim zadaniem jest oddzielenie modułu lojalnościowego (loyalty) od modułu kuponów (coupon).
-Dla tego celu zostały już stworzone odpowiednie pakiety:
+Dla tego celu stwórz odpowiednie pakiety:
 * [pl.kuponik.coupon](./src/main/java/pl/kuponik/coupon)
-* [pl.kuponik.loyalty](./src/main/java/pl/kuponik/loyalty)
+* [pl.kuponik.loyalty](./src/main/java/pl/kuponik/loyalty) (już stworzony)
 * [pl.kuponik.common](./src/main/java/pl/kuponik/common) (tu powinny trafić tylko ApiErrorResponse i klasa z @ControllerAdvice)
 
 Moduł lojalnościowy nie może korzystać z żadnych elementów modułu kuponów, a moduł kuponów może korzystać tylko z [LoyaltyFacade](./src/main/java/pl/kuponik/loyalty/LoyaltyFacade.java).
